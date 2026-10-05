@@ -91,6 +91,19 @@ chmod +x samples/test_pilot_e2e.sh
 ./samples/test_pilot_e2e.sh https://<YOUR-CLOUD-RUN-URL>
 ```
 
+### Step 5: Customize Compliance Rules to Your Liking (Important!)
+> [!TIP]
+> **Don't stay limited to the default 17 rules!** The pilot comes pre-configured with 17 baseline Go-Back checks, but the evaluation rules and reference policies are **completely externalized**. You can easily add, edit, or toggle rules for your own utility clients, municipal permits, or internal QA standards without touching Python code or redeploying Cloud Run:
+> 
+> * **Option A (YAML):** Edit [`config/compliance_rules.yaml`](config/compliance_rules.yaml) directly. Add new checks with your custom `name`, `category`, `evaluation_criteria`, and `remediation_template`.
+> * **Option B (Excel / CSV):** Open [`config/compliance_rules_template.csv`](config/compliance_rules_template.csv) in Microsoft Excel to modify checks in a familiar spreadsheet format.
+> * **To apply changes in Cloud Storage:**
+>   ```bash
+>   gcloud storage cp config/compliance_rules.yaml gs://<YOUR-BUCKET>/config/compliance_rules.yaml
+>   curl -X POST https://<YOUR-CLOUD-RUN-URL>/api/rules/reload
+>   ```
+> * **Reference Job Aides:** Drop your utility partner's official PDF standards into `config/reference_docs/` for automatic Vertex AI Context Caching (saving up to 75% on repeated token costs).
+
 ---
 
 ## 🛠️ Testing Locally
