@@ -23,6 +23,8 @@ This pilot deploys a turnkey, automated **Quality Firewall** inside the Contract
 
 ## 1. End-to-End Architecture & The Middleware Pattern
 
+![Enterprise Hybrid Architecture: Microsoft 365 + Google Cloud Platform](docs/img/architecture_flow.jpg)
+
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                 HYBRID UTILITY AS-BUILT PILOT ARCHITECTURE FLOW                                   │

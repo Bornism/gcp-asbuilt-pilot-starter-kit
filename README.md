@@ -11,6 +11,9 @@ By positioning **Google Cloud Vertex AI (Gemini Flash)** and **Cloud Run** as an
 ---
 
 ## ⚡ Key Architectural Capabilities
+
+![Enterprise Hybrid Architecture: Microsoft 365 + Google Cloud Platform](docs/img/architecture_flow.jpg)
+
 1. **Middleware Pattern for Zero Timeouts:** Uses Google Cloud Storage (GCS) V4 Presigned PUT URLs to allow direct binary streaming, completely bypassing Power Automate’s strict **120-second synchronous HTTP timeout** and **100 MB message buffer ceilings**.
 2. **Pure Gemini Flash Multimodal Inspection:** Directly inspects raster/vector CAD blueprints, colored redline layers, stamps, and tabular text in a single inference pass—skipping brittle and expensive intermediate OCR processors (Document AI / Azure Form Recognizer).
 3. **Vertex AI Context Caching:** Binds static utility reference guidelines (PG&E Job Aides, standard detail handbooks) in a persistent 24-hour cache, slashing repeated input token costs by up to **75%**.
