@@ -14,13 +14,15 @@ By positioning **Google Cloud Vertex AI (Gemini Flash)** and **Cloud Run** as an
 
 ![Enterprise Hybrid Architecture: Microsoft 365 + Google Cloud Platform](docs/img/architecture_flow.jpg)
 
-1. **Middleware Pattern for Zero Timeouts:** Uses Google Cloud Storage (GCS) V4 Presigned PUT URLs to allow direct binary streaming, completely bypassing Power Automate’s strict **120-second synchronous HTTP timeout** and **100 MB message buffer ceilings**.
-2. **Pure Gemini Flash Multimodal Inspection:** Directly inspects raster/vector CAD blueprints, colored redline layers, stamps, and tabular text in a single inference pass—skipping brittle and expensive intermediate OCR processors (Document AI / Azure Form Recognizer).
-3. **Vertex AI Context Caching:** Binds static utility reference guidelines (PG&E Job Aides, standard detail handbooks) in a persistent 24-hour cache, slashing repeated input token costs by up to **75%**.
-4. **Controlled Generation (`response_schema`):** Mathematically forces deterministic JSON output containing both the **physical 1-based PDF page index** and the **printed title block drawing sheet number** to eliminate page-drift.
-5. **Configurable Externalized Rules Engine:** Non-technical QA directors, project managers, and lead P.E.s can add, edit, or toggle compliance checks via a clean `compliance_rules.yaml` or `.csv` file in GCS with zero code redeployments.
-6. **In-Memory Excel Scorecard Generation:** Automatically compiles a color-coded, branded `.xlsx` compliance scorecard using Python `openpyxl` in ~250 milliseconds and writes it back to SharePoint.
-7. **Zero-Residue Ephemeral Lifecycle:** Automatically executes `blob.delete()` on CAD drawings immediately following Gemini audit completion, backed by a bucket-level 24-hour auto-purge safety net.
+| Architecture Pillar | Core Engineering Mechanism | Business & Performance Impact |
+| :--- | :--- | :--- |
+| **Direct Streaming Middleware** | Issues Google Cloud Storage (GCS) V4 Presigned PUT URLs for direct client uploads. | Completely bypasses Power Automate's 120-second synchronous HTTP timeout and 100 MB message size limits for large 150 MB+ packages. |
+| **Pure Gemini Flash Inspection** | Ingests native multimodal PDF vectors, visual redline layers, and stamps in a single inference pass. | Eliminates brittle Document AI OCR extraction and preserves 24" × 36" CAD sub-pixel line geometry. |
+| **Vertex AI Context Caching** | Pins static utility reference handbooks and standard detail specifications in memory with 24-hour TTL. | Reduces repeated input token processing costs by up to 75% while decreasing time-to-first-token latency. |
+| **Deterministic Generation** | Enforces JSON schema validation via Vertex AI `response_schema` controls. | Delivers reliable status enums (`PASS`, `FAIL`, `N/A`) alongside both physical 1-based PDF page index and printed drawing sheet number. |
+| **Externalized Policy Engine** | Reads compliance definitions dynamically from `compliance_rules.yaml` or `.csv` spreadsheets in GCS. | Empowers non-technical QA leads and project managers to edit rules or adjust profiles with zero code redeployments. |
+| **Sub-Second Scorecard Build** | Assembles styled, color-coded `.xlsx` workbooks directly in memory using Python `openpyxl`. | Delivers instant defect audit results in 250 milliseconds with zero Microsoft Graph API row-insertion throttling. |
+| **Zero-Residue Data Purge** | Executes immediate programmatic `blob.delete()` cleanup backed by a 24-hour GCS lifecycle rule. | Guarantees zero long-term retention of critical infrastructure CAD blueprints within Google Cloud storage. |
 
 ---
 
