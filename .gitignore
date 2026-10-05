@@ -1,0 +1,55 @@
+# Environments & Secrets
+.env
+.env.local
+*.key
+*.json
+credentials.json
+service_account.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+.venv/
+ENV/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+crash.log
+
+# Temporary test and audit outputs
+/tmp/
+*.xlsx
+output/
+sample_output/
+*.log
+
+# OS & IDE
+.DS_Store
+.idea/
+.vscode/
+*.swp
