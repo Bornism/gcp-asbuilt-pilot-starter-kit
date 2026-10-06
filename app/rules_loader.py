@@ -15,13 +15,19 @@ import json
 import logging
 from typing import Dict, List, Optional, Any
 import yaml
-from google.cloud import storage
+
+try:
+    from google.cloud import storage
+    STORAGE_AVAILABLE = True
+except (ImportError, AttributeError):
+    storage = None
+    STORAGE_AVAILABLE = False
 
 logger = logging.getLogger("rules-loader")
 
 
 class RulesEngine:
-    def __init__(self, config_path: Optional[str] = None, storage_client: Optional[storage.Client] = None):
+    def __init__(self, config_path: Optional[str] = None, storage_client: Optional[Any] = None):
         self.config_path = config_path or os.getenv("RULES_CONFIG_PATH", "config/compliance_rules.yaml")
         self.storage_client = storage_client
         self.rules: List[Dict[str, Any]] = []

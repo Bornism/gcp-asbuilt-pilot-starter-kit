@@ -17,17 +17,32 @@ import logging
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timedelta
 
-from google.cloud import storage
-import vertexai
-from vertexai.generative_models import (
-    GenerativeModel,
-    GenerationConfig,
-    Part
-)
+try:
+    from google.cloud import storage
+    STORAGE_AVAILABLE = True
+except (ImportError, AttributeError):
+    storage = None
+    STORAGE_AVAILABLE = False
+
+try:
+    import vertexai
+    from vertexai.generative_models import (
+        GenerativeModel,
+        GenerationConfig,
+        Part
+    )
+    VERTEX_AVAILABLE = True
+except (ImportError, AttributeError):
+    vertexai = None
+    GenerativeModel = None
+    GenerationConfig = None
+    Part = None
+    VERTEX_AVAILABLE = False
+
 try:
     from vertexai.preview import caching
     CACHING_AVAILABLE = True
-except ImportError:
+except (ImportError, AttributeError):
     CACHING_AVAILABLE = False
 
 from app.schemas import (
@@ -48,18 +63,30 @@ class MultimodalAuditEvaluator:
         bucket_name: str,
         model_name: str = "gemini-2.5-flash",
         rules_engine: Optional[RulesEngine] = None,
-        storage_client: Optional[storage.Client] = None
+        storage_client: Optional[Any] = None
     ):
         self.project_id = project_id
         self.region = region
         self.bucket_name = bucket_name
         self.model_name = model_name
-        self.storage_client = storage_client or storage.Client(project=self.project_id)
+        self.storage_client = storage_client
+        if self.storage_client is None and STORAGE_AVAILABLE and storage is not None:
+            try:
+                self.storage_client = storage.Client(project=self.project_id)
+            except Exception as se:
+                logger.warning(f"Could not auto-create storage client: {se}")
+
         self.rules_engine = rules_engine or RulesEngine(storage_client=self.storage_client)
         self.context_cache_name: Optional[str] = None
 
-        vertexai.init(project=self.project_id, location=self.region)
-        logger.info(f"Initialized Vertex AI with model {self.model_name} in {self.region}")
+        if VERTEX_AVAILABLE and vertexai is not None:
+            try:
+                vertexai.init(project=self.project_id, location=self.region)
+                logger.info(f"Initialized Vertex AI with model {self.model_name} in {self.region}")
+            except Exception as ve:
+                logger.warning(f"Could not initialize Vertex AI SDK: {ve}")
+        else:
+            logger.info("Vertex AI SDK not available in local environment; running in simulated mode.")
 
     def build_system_instruction(
         self,
