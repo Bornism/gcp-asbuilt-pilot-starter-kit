@@ -2,8 +2,6 @@
 ## Automated As-Built Job Package Quality Firewall via Google Cloud Vertex AI (Gemini Flash)
 
 **Document Version:** 2.0 (Updated Post-October 5 Architectural Alignment)  
-**Target Audience:** Adham Abadier (`contractor-tech-lead@contractor.example.com`), Robert "Robby" Mena, Rodolfo Massie, and the Contractor IT/Cloud Engineering  
-**Google Cloud Team:** Christopher Duncan (`duncanchris@google.com`), Mandar Vengurlekar, and Steve Munn  
 
 ---
 
@@ -278,8 +276,3 @@ This starter kit is optimized for a fast, friction-free **Proof of Concept / Pil
 3. **Critical Energy Infrastructure Information (CEII) Protection:** Because drawings are purged immediately post-audit (`blob.delete()`), the Contractor maintains complete custody of critical utility grid schematics within Microsoft 365.
 
 ---
-
-## 8. Support & Contact Information
-* **Christopher Duncan**, Customer Engineer (`duncanchris@google.com`)
-* **Mandar Vengurlekar**, Customer Engineer
-* **Steve Munn**, Account Executive
